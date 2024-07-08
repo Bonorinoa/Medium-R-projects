@@ -1,0 +1,95 @@
+---
+title: "Solow Growth Model"
+author: "Augusto Gonzalez-Bonorino"
+date: "2024-07-08"
+output: html_notebook
+---
+
+
+```{r}
+solow_model <- function (s, n, r, a) {
+  drdt <- s * r^a - n * r
+  return(drdt)
+}
+
+s <- 0.3
+n <- 0.02
+a <- 1/3
+
+r <- seq(0, 100, by = 0.1)
+
+drdt <- solow_model(s, n, r, a)
+
+plot(r, drdt, type = "l", xlab = "r", ylab = "dr/dt")
+title("Solow model (a = 1/3)")
+abline(h = 0, col = "red")
+
+# add label at r = 0 and r = (s/n)^(3/2)
+text(0, 0, "r = 0", pos=3)
+text((s/n)^(1/(1-a)), 0, "r = (s/n)^(3/2)", pos=3)
+```
+
+```{r}
+# simulation of the Solow model possible trajectories for different n
+# Parameters
+s <- 0.3
+a <- 1/3
+r <- seq(0, 100, by = 0.1)
+
+# Different values of n to simulate
+n_values <- c(0.01, 0.02, 0.03, 0.04)
+
+# Colors for each trajectory
+colors <- c("blue", "green", "orange", "purple")
+
+# Plot the initial graph for the first value of n
+n <- n_values[1]
+drdt <- solow_model(s, n, r, a)
+plot(r, drdt, type = "l", col = colors[1], xlab = "r", ylab = "dr/dt", ylim = c(-1, 1))
+title("Solow Model (a = 1/3, s = 0.3) with Different n Values")
+abline(h = 0, col = "red")
+
+# Plot other trajectories
+for (i in 2:length(n_values)) {
+  n <- n_values[i]
+  drdt <- solow_model(s, n, r, a)
+  lines(r, drdt, col = colors[i])
+}
+
+
+# Add legend
+legend("topright", legend = sprintf("n = %.2f", n_values), col = colors, lty = 1)
+
+```
+
+```{r}
+# simulation of the Solow model possible trajectories for different s
+# Parameters
+n <- 0.02
+a <- 1/3
+r <- seq(0, 100, by = 0.1)
+
+s_values <- c(0.1, 0.2, 0.3, 0.4, 0.5)
+
+# Colors for each trajectory
+colors <- c("blue", "green", "orange", "purple", "red")
+
+# Plot the initial graph for the first value of n
+s <- s_values[1]
+drdt <- solow_model(s, n, r, a)
+plot(r, drdt, type = "l", col = colors[1], xlab = "r", ylab = "dr/dt", ylim = c(-1, 1))
+title("Solow Model (a = 1/3, n = 0.02) with Different s Values")
+abline(h = 0, col = "red")
+
+# Plot other trajectories
+for (i in 2:length(s_values)) {
+  s <- s_values[i]
+  drdt <- solow_model(s, n, r, a)
+  lines(r, drdt, col = colors[i])
+}
+
+
+# Add legend
+legend("topright", legend = sprintf("s = %.2f", s_values), col = colors, lty = 1)
+```
+
