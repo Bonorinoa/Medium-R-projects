@@ -93,3 +93,29 @@ for (i in 2:length(s_values)) {
 legend("topright", legend = sprintf("s = %.2f", s_values), col = colors, lty = 1)
 ```
 
+```{r}
+s <- 0.3
+a <- 1/3
+n <- 0.02
+r <- seq(0, 100, by = 0.1) # capital-labor ratio (x-axis)
+
+y_per_capita <- s * (r)^a # output per worker (y-axis)
+
+plot(r, y_per_capita, type = "l", xlab = "K/L (capital per worker)", ylab = "Y/L (output per worker)")
+text(40, 1.1, "s*r^a", pos=3)
+
+title("Solow model (a = 1/3)")
+
+abline(a=c(0,0), b=n, col = "red", lty = 2)
+text(20, 0.4, "n*r", pos=3, col="red")
+
+# steady-state
+text((s/n)^(1/(1-a)), y_per_capita[400], "steady-state", pos=4, col="red")
+
+# the steady-state with cobb-douglas production function 
+# No output unless K and L are positive
+# Diminishing marginal productivity of capital
+# The steady-state is a stable equilibrium point 
+## Whatever the initial value of the capital-labor ratio, the system will develop toward a state of balanced growth at the natural rate.
+```
+
